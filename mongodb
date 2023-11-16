@@ -1,0 +1,44 @@
+db.employees.insert({
+    name: "John Doe",
+    age: 30,
+    department: "Development"
+});
+
+db.employees.find();
+
+db.employees.find({
+    department: "Development",
+    age: { $gte: 25 }
+});
+
+db.employees.update(
+    { name: "John Doe" },
+    { $set: { age: 32 } }
+);
+
+db.employees.remove({
+    age: { $lt: 25 }
+});
+
+db.employees.find({
+    $or: [
+        { department: "Development" },
+        { department: "Testing" }
+    ]
+});
+
+db.employees.find({
+    department: "Development",
+    $or: [
+        { age: { $lte: 30 } },
+        { age: { $exists: false } } // This handles documents without an "age" field
+    ]
+});
+
+var newEmployee = {
+    name: "Jane Smith",
+    age: 28,
+    department: "Testing"
+};
+
+db.employees.save(newEmployee);
